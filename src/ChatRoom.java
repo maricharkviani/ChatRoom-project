@@ -9,10 +9,10 @@ public class ChatRoom {
     public ServerSocket serverSocket;
     public Map<String, ObjectOutputStream> clients;
 
-    public ChatRoom(ServerSocket serverSocket, Map<String, ObjectOutputStream> clients) {
+    public ChatRoom(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
-        this.clients = clients;
     }
+
     public ChatRoom(int port) {
         clients = new ConcurrentHashMap<>();
 
@@ -22,7 +22,7 @@ public class ChatRoom {
 
             while (true) {
                 Socket socket = serverSocket.accept();
-                new Thread(new ClientHandler(socket)).start();
+                new Thread(new ClientHandler(serverSocket)).start();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -39,6 +39,4 @@ public class ChatRoom {
             }
         }
     }
-
-
 }

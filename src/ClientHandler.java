@@ -11,13 +11,10 @@ public class ClientHandler extends ChatRoom implements Runnable {
     private ObjectOutputStream outputStream;
     private String username;
 
-    public ClientHandler(ServerSocket serverSocket, Map<String, ObjectOutputStream> clients, Socket socket) {
-        super(serverSocket, clients);
-        this.socket = socket;
-        this.inputStream = inputStream;
-        this.outputStream = outputStream;
-        this.username = username;
+    public ClientHandler(ServerSocket serverSocket) {
+        super(serverSocket);
     }
+
 
     @Override
     public void run() {
