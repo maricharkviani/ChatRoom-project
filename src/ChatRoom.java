@@ -12,7 +12,7 @@ public class ChatRoom {
     public ChatRoom(ServerSocket serverSocket, Map<String, ObjectOutputStream> clients) {
         this.serverSocket = serverSocket;
         this.clients = clients;
-    } //asdasd
+    }
     public ChatRoom(int port) {
         clients = new ConcurrentHashMap<>();
 
