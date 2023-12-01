@@ -14,15 +14,14 @@ public class ChatRoomServer {
     private static int port;
     private static Map<String, Socket> user = new HashMap<>();
     private static DataOutputStream dataOutputStream;
-    private static DataInputStream dataInputStream;
 
 
     public static void acceptClients() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("If you want to exit chat write: /exit");
-        System.out.println("If you want to send private messages in chat write: /private");
-        System.out.println("If you want to change username write: /changeUsername");
         System.out.println("Server address: localhost");
+        System.out.println("If you want to change username write: /changeUsername");
+        System.out.println("If you want to send private messages in chat write: /private");
+        System.out.println("If you want to exit chat write: /exit");
         System.out.println("Enter the server port: ");
         port = scanner.nextInt();
         new Thread(() -> {
@@ -89,7 +88,6 @@ public class ChatRoomServer {
         sockets.remove(newUsername);
     }
 
-    //private gocha: luka: hello
     public static void sendPrivateMessage(String sender, String receiver, String message) {
         if (user.containsKey(receiver)) {
             sendMessageToClient(sender + message, user.get(receiver));
@@ -112,9 +110,13 @@ public class ChatRoomServer {
             case "/private": {
                 Pattern pattern = Pattern.compile("\\/private (\\w+)");
                 Matcher matcher = pattern.matcher(command);
+                String sender = null;
                 String receiver = null;
                 if (matcher.find()) {
-                    receiver = matcher.group(1);
+                    sender = matcher.group(1);
+                    if (matcher.find()) {
+                        receiver = matcher.group(1);
+                    }
                 }
                 String message = null;
                 pattern = Pattern.compile(":(.*)");
@@ -122,8 +124,6 @@ public class ChatRoomServer {
                 if (matcher.find()) {
                     message = matcher.group(1);
                 }
-                String sender = null;
-//                pattern = Pattern.compile(":(.*)");
                 matcher = pattern.matcher(command);
                 if (matcher.find()) {
                     message = matcher.group(1);
